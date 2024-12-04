@@ -1,5 +1,6 @@
 import { useState } from "react";
 
+// Daftar Teman
 const initialFriends = [
   {
     id: 118836,
@@ -21,6 +22,7 @@ const initialFriends = [
   },
 ];
 
+// Button Component
 function Button({ children, onClick }) {
   return (
     <button className="button" onClick={onClick}>
@@ -29,28 +31,33 @@ function Button({ children, onClick }) {
   );
 }
 
+// App Component
 export default function App() {
   const [friends, setFriends] = useState(initialFriends);
   const [showAddFriend, setShowAddFriend] = useState(false);
   const [selectedFriend, setSelectedFriend] = useState(null);
 
+  //   Menampilkan Form Add Friend
   function handleShowAddFriend() {
     setShowAddFriend((show) => !show);
   }
 
+  //   Menambahkan Teman
   function handleAddFriend(friend) {
     setFriends((friends) => [...friends, friend]);
     setShowAddFriend(false);
   }
 
+  //   Memilih Teman
   function handleSelectFriend(friend) {
     // setSelectedFriend(friend);
     setSelectedFriend((cur) => (cur?.id === friend.id ? null : friend));
     setShowAddFriend(false);
   }
 
+  //   Menambahkan Pembayaran
   function handleSplitBill(value) {
-    setFriends((friend) =>
+    setFriends((friends) =>
       friends.map((friend) =>
         friend.id === selectedFriend.id
           ? { ...friend, balance: friend.balance + value }
@@ -86,6 +93,7 @@ export default function App() {
   );
 }
 
+// FriendList Component
 function FriendList({ friends, onSelection, selectedFriend }) {
   return (
     <ul>
@@ -101,6 +109,7 @@ function FriendList({ friends, onSelection, selectedFriend }) {
   );
 }
 
+// Friend Component
 function Friend({ friend, onSelection, selectedFriend }) {
   const isSelected = selectedFriend?.id === friend.id;
   return (
@@ -139,10 +148,12 @@ function Friend({ friend, onSelection, selectedFriend }) {
   );
 }
 
+// FormAddFriend Component
 function FormAddFriend({ onAddFriend }) {
   const [name, setName] = useState("");
   const [image, setImage] = useState("https://i.pravatar.cc/48");
 
+  //   submit form add friend
   function handleSubmit(e) {
     e.preventDefault();
     if (!name || !image) return;
@@ -181,12 +192,14 @@ function FormAddFriend({ onAddFriend }) {
   );
 }
 
+// FormSplitBill Component
 function FormSplitBill({ selectedFriend, onSplitBill }) {
   const [bill, setBill] = useState("");
   const [paidByUser, setPaidByUser] = useState("");
   const paidByFriend = bill ? bill - paidByUser : "";
   const [whoIsPaying, setWhoIsPaying] = useState("user");
 
+  //   submit form split bill
   function handleSubmit(e) {
     e.preventDefault();
 
